@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gradient-primary-start: #667eea;
+  --color-gradient-primary-end: #764ba2;
+  --color-gradient-secondary-start: #f093fb;
+  --color-gradient-secondary-end: #f5576c;
+  --color-gradient-success-start: #4facfe;
+  --color-gradient-success-end: #00f2fe;
+  --color-gradient-accent-start: #fa709a;
+  --color-gradient-accent-end: #fee140;
+  
+  --animate-shimmer: shimmer 2s infinite linear;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* CSS Custom Properties for Design Tokens */
+:root {
+  /* Gradient Colors */
+  --gradient-primary-start: #667eea;
+  --gradient-primary-end: #764ba2;
+  --gradient-secondary-start: #f093fb;
+  --gradient-secondary-end: #f5576c;
+  --gradient-success-start: #4facfe;
+  --gradient-success-end: #00f2fe;
+  --gradient-accent-start: #fa709a;
+  --gradient-accent-end: #fee140;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 10px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  
+  /* Animation Timing */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Glassmorphism Utility Classes */
+@layer utilities {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+  }
+  
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(10px)) {
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .glass-dark {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+/* Custom Animation Keyframes */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-rotate {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Floating Label Utility Classes */
+@layer components {
+  .floating-label-group {
+    position: relative;
+  }
+  
+  .floating-label {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    transition: all 0.2s var(--easing-out);
+    pointer-events: none;
+    color: #6b7280;
+    font-size: 1rem;
+  }
+  
+  .floating-input {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .floating-input:focus ~ .floating-label,
+  .floating-input:not(:placeholder-shown) ~ .floating-label {
+    transform: translateY(-0.75rem) scale(0.75);
+    color: var(--gradient-primary-start);
+    font-weight: 500;
+  }
+  
+  /* Gradient Border Animation */
+  .gradient-border {
+    position: relative;
+    background: white;
+    border-radius: 0.5rem;
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--gradient-primary-start), var(--gradient-primary-end), var(--gradient-secondary-start));
+    background-size: 200% 200%;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s var(--easing-out);
+    animation: gradient-rotate 3s ease infinite;
+  }
+  
+  .gradient-border:focus-within::before {
+    opacity: 1;
+  }
+}
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #2d2d2d 25%,
+      #1a1a1a 50%,
+      #2d2d2d 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+/* Custom Gradient Utilities for Tailwind v4 */
+.bg-gradient-primary {
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-secondary {
+  background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-gradient-success {
+  background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-accent {
+  background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.bg-gradient-shimmer {
+  background-image: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
