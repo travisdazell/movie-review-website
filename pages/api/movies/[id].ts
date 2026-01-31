@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getMovie, getReviews } from '../../../lib/db';
+import { useMockData, getMovieWithReviews } from '../../../lib/mock-data-loader';
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,6 +15,19 @@ export default async function handler(
 
   if (req.method === 'GET') {
     try {
+      // Check if we should use mock data (development mode without Firebase)
+      if (useMockData()) {
+        console.log(`🎬 Development mode: Loading movie ${id} from mock data`);
+        const result = getMovieWithReviews(id);
+        
+        if (!result) {
+          return res.status(404).json({ error: 'Movie not found' });
+        }
+
+        return res.status(200).json({ movie: result.movie, reviews: result.reviews });
+      }
+
+      // Use Firebase in production or when configured
       const movie = await getMovie(id);
       if (!movie) {
         res.status(404).json({ error: 'Movie not found' });
