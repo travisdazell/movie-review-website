@@ -1,1 +1,4 @@
 node_modules
+
+# Specification and planning directories
+.specify/

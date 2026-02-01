@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/travisdazell/movie-review-website/schemas/mock-data.json",
+  "title": "Mock Movie Data Schema",
+  "description": "JSON schema for validating mock movie and review data structure",
+  "type": "object",
+  "required": ["movies", "reviews"],
+  "properties": {
+    "movies": {
+      "type": "array",
+      "description": "Array of movie objects",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "$ref": "#/definitions/Movie"
+      }
+    },
+    "reviews": {
+      "type": "object",
+      "description": "Reviews grouped by movieId",
+      "patternProperties": {
+        "^mov-\\d{3}$": {
+          "type": "array",
+          "description": "Array of reviews for a specific movie",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "maxItems": 15
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Movie": {
+      "type": "object",
+      "description": "A movie entity with metadata",
+      "required": ["id", "title", "year", "director", "actors"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique movie identifier",
+          "pattern": "^mov-\\d{3}$",
+          "examples": ["mov-001", "mov-042", "mov-080"]
+        },
+        "title": {
+          "type": "string",
+          "description": "Movie title",
+          "minLength": 1,
+          "maxLength": 100,
+          "examples": [
+            "The Shawshank Redemption",
+            "Inception",
+            "The Matrix"
+          ]
+        },
+        "year": {
+          "type": "integer",
+          "description": "Release year",
+          "minimum": 1970,
+          "maximum": 2025,
+          "examples": [1994, 2010, 1999]
+        },
+        "director": {
+          "type": "string",
+          "description": "Director name",
+          "minLength": 1,
+          "maxLength": 100,
+          "examples": ["Frank Darabont", "Christopher Nolan", "The Wachowskis"]
+        },
+        "actors": {
+          "type": "array",
+          "description": "List of main actors",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "examples": [
+            ["Tim Robbins", "Morgan Freeman"],
+            ["Leonardo DiCaprio", "Marion Cotillard"],
+            ["Keanu Reeves", "Laurence Fishburne"]
+          ]
+        },
+        "image": {
+          "type": "string",
+          "description": "URL to movie poster image (optional)",
+          "format": "uri",
+          "pattern": "^https?://",
+          "examples": [
+            "https://picsum.photos/seed/mov-001/300/450",
+            "https://via.placeholder.com/300x450"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Review": {
+      "type": "object",
+      "description": "A user review for a movie",
+      "required": ["id", "userId", "grade", "text", "createdAt"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique review identifier",
+          "pattern": "^rev-\\d{3}-\\d{3}$",
+          "examples": ["rev-001-001", "rev-042-005", "rev-080-012"]
+        },
+        "userId": {
+          "type": "string",
+          "description": "Mock username of reviewer",
+          "pattern": "^[a-z_]{3,20}$",
+          "examples": ["alice_m", "bob_r", "charlie_w"]
+        },
+        "grade": {
+          "type": "string",
+          "description": "Letter grade assigned to movie",
+          "enum": ["A+", "A", "B", "C", "D", "F"]
+        },
+        "text": {
+          "type": "string",
+          "description": "Review content",
+          "minLength": 30,
+          "maxLength": 500,
+          "examples": [
+            "An absolute masterpiece that transcends the medium. The performances are flawless.",
+            "Solid film with great direction. Some pacing issues in the second act.",
+            "Disappointing execution of an interesting premise. Poor character development."
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO 8601 timestamp when review was posted",
+          "format": "date-time",
+          "examples": [
+            "2025-08-15T10:30:00Z",
+            "2025-09-01T14:22:35Z",
+            "2025-07-10T08:15:00Z"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    {
+      "movies": [
+        {
+          "id": "mov-001",
+          "title": "The Shawshank Redemption",
+          "year": 1994,
+          "director": "Frank Darabont",
+          "actors": ["Tim Robbins", "Morgan Freeman", "Bob Gunton"],
+          "image": "https://picsum.photos/seed/mov-001/300/450"
+        },
+        {
+          "id": "mov-002",
+          "title": "The Godfather",
+          "year": 1972,
+          "director": "Francis Ford Coppola",
+          "actors": ["Marlon Brando", "Al Pacino", "James Caan"]
+        }
+      ],
+      "reviews": {
+        "mov-001": [
+          {
+            "id": "rev-001-001",
+            "userId": "alice_m",
+            "grade": "A+",
+            "text": "An absolute masterpiece that transcends the medium. The performances by Robbins and Freeman are career-defining, and the story is deeply moving.",
+            "createdAt": "2025-08-15T10:30:00Z"
+          },
+          {
+            "id": "rev-001-002",
+            "userId": "bob_r",
+            "grade": "A",
+            "text": "Incredible storytelling and emotional depth. The cinematography is beautiful and the pacing is perfect. A must-watch classic.",
+            "createdAt": "2025-07-22T14:15:00Z"
+          }
+        ],
+        "mov-002": [
+          {
+            "id": "rev-002-001",
+            "userId": "charlie_w",
+            "grade": "A+",
+            "text": "The definitive crime drama that set the standard for all others. Brando's performance is unforgettable and Coppola's direction is masterful.",
+            "createdAt": "2025-09-01T09:00:00Z"
+          }
+        ]
+      }
+    }
+  ]
+}
