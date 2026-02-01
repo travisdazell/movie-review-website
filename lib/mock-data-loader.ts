@@ -159,7 +159,7 @@ export function getReviewsForMovie(movieId: string): Review[] {
   const reviewsWithMovieId: Review[] = movieReviews.map(review => ({
     ...review,
     movieId,
-    createdAt: new Date(review.createdAt as string)
+    createdAt: new Date(review.createdAt as unknown as string)
   }));
 
   console.log(`📊 Loaded ${reviewsWithMovieId.length} reviews for movie ${movieId}`);
@@ -198,7 +198,7 @@ export function getReviewById(reviewId: string): Review | null {
   return {
     ...review,
     movieId,
-    createdAt: new Date(review.createdAt as string)
+    createdAt: new Date(review.createdAt as unknown as string)
   };
 }
 

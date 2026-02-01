@@ -168,14 +168,14 @@
 
 ### Implementation for User Story 6
 
-- [ ] T036 [P] [US6] Update README.md with "Mock Data Mode" section explaining automatic detection
-- [ ] T037 [P] [US6] Add "Quick Start (No Firebase Required)" section to README.md with 3-step process
-- [ ] T038 [P] [US6] Add "Switching to Firebase" section to README.md
-- [ ] T039 [P] [US6] Document mock data structure and customization in README.md
-- [ ] T040 [US6] Verify quickstart.md instructions match actual implementation
-- [ ] T041 [US6] Add troubleshooting section for common issues (blank screen, images not loading)
+- [X] T036 [P] [US6] Update README.md with "Mock Data Mode" section explaining automatic detection
+- [X] T037 [P] [US6] Add "Quick Start (No Firebase Required)" section to README.md with 3-step process
+- [X] T038 [P] [US6] Add "Switching to Firebase" section to README.md
+- [X] T039 [P] [US6] Document mock data structure and customization in README.md
+- [X] T040 [US6] Verify quickstart.md instructions match actual implementation
+- [X] T041 [US6] Add troubleshooting section for common issues (blank screen, images not loading)
 
-**Checkpoint**: Documentation complete - onboarding time < 5 minutes verified - User Story 6 COMPLETE
+**Checkpoint**: Documentation complete - onboarding time < 5 minutes verified - User Story 6 COMPLETE ✅
 
 ---
 
@@ -183,17 +183,17 @@
 
 **Purpose**: Final validation and refinement across all user stories
 
-- [ ] T042 [P] Run JSON validator on lib/data/mock-movies.json (npx prettier --check)
-- [ ] T043 [P] Verify all 80 movies have valid image URLs (load test in browser)
-- [ ] T044 Verify grade distribution matches spec (A+/A 30%, B 25%, C 20%, D 15%, F 10%)
-- [ ] T045 Test edge cases: movie with 0 reviews, movie with 15 reviews, very long title
-- [ ] T046 [P] Verify production build ignores mock data (set NODE_ENV=production and verify Firebase required)
-- [ ] T047 Test all console logging shows appropriate emoji indicators (🎬, 📊, ⚠️, ❌)
-- [ ] T048 Run through quickstart.md validation steps (fresh clone simulation)
-- [ ] T049 Verify all acceptance criteria from spec.md are met
-- [ ] T050 Code cleanup: remove any commented-out code, ensure consistent formatting
+- [X] T042 [P] Run JSON validator on lib/data/mock-movies.json (npx prettier --check)
+- [X] T043 [P] Verify all 80 movies have valid image URLs (load test in browser)
+- [X] T044 Verify grade distribution matches spec (A+/A 30%, B 25%, C 20%, D 15%, F 10%)
+- [X] T045 Test edge cases: movie with 0 reviews, movie with 15 reviews, very long title
+- [X] T046 [P] Verify production build ignores mock data (set NODE_ENV=production and verify Firebase required)
+- [X] T047 Test all console logging shows appropriate emoji indicators (🎬, 📊, ⚠️, ❌)
+- [X] T048 Run through quickstart.md validation steps (fresh clone simulation)
+- [X] T049 Verify all acceptance criteria from spec.md are met
+- [X] T050 Code cleanup: remove any commented-out code, ensure consistent formatting
 
-**Checkpoint**: Feature 003 complete and validated - ready for merge to develop
+**Checkpoint**: Feature 003 complete and validated - ready for merge to develop ✅
 
 ---
 
